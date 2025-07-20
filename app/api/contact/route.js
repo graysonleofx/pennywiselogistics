@@ -29,10 +29,18 @@ export async function POST(req) {
       `
     });
 
-    return new Response(JSON.stringify({ success: true}), { status: 200 });
+    console.log
+
+    return new Response(JSON.stringify({ success: true}), 
+    { status: 200 ,
+      headers: {'Content-Type': 'application/json'},
+    });
+
     // return new Response(JSON.stringify({ success: true, data }), { status: 200, headers });
   } catch (error) {
-    return new Response(JSON.stringify({ success: false }), { status: 500 });
+    return new Response(JSON.stringify({ success: false, error: 'Something went wrong' }), { status: 500,
+      headers: {'Content-Type': 'application/json'},
+     });
     // return new Response(JSON.stringify({ success: false, error: error.message }), { status: 500, headers });
   }
 }

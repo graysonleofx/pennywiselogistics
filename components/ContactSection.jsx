@@ -34,7 +34,7 @@ const ContactSection = () => {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({formData}),
       });
       const result = await res.json();
       if (result.success) {
