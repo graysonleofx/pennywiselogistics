@@ -1,7 +1,12 @@
 // React Contact Form Component
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const ContactSection = () => {
+
+  useEffect(() =>{
+    console.log('Publick API URL:', process.env.NEXT_PUBLIC_API_URL)
+  }, [])
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
