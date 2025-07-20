@@ -1,4 +1,3 @@
-import planeImg from '../plane.jpeg'
 
 const services = [
   {
@@ -19,7 +18,7 @@ const services = [
     id: '3',
     title: 'Airline Freight Transportation',
     description: 'Pennywise Logistics Airline freight transportation is an efficient, reliable, and environmentally friendly solution for moving large volumes of goods over long distances across land.',
-    image: 'https://assets.pinterest.com/ext/embed.html?id=795377984225973662',
+    image: '/assets/plane.jpeg',
     icon: 'ri-plane-line'
   }
 ];

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import  supabase from '@/lib/supabaseClient';
-import { sendEmailNotification } from '@/lib/sendEmailNotify';
+// import { sendEmailNotification } from '@/lib/sendEmailNotify';
 
 
 export default function AdminDashboard({ onLogout }) {
@@ -316,7 +316,29 @@ export default function AdminDashboard({ onLogout }) {
       trackingUrl: `pennywiselogistics.online/track/${trackingId}`
     }
 
-    await sendEmailNotification(newShip.receiverEmail, trackingId, shipmentDetails);
+    try{
+      const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          email: newShip.receiverEmail,
+          trackingId: trackingId,
+          shipmentDetails: shipmentDetails
+        })
+      });
+      const result = await res.json();
+      if(result.success){
+        console.log('Email sent successfully:', result);
+        alert('Email notification sent successfully!');
+      }else{
+        console.error('Error sending email:', result);
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Failed to send email notification. Please try again later.');
+    } 
+
+    // await sendEmailNotification(newShip.receiverEmail, trackingId, shipmentDetails);
   };
 
   const updateTimeline = async (trackingId, newTimelineItem) => {
@@ -745,7 +767,7 @@ export default function AdminDashboard({ onLogout }) {
                       onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none text-sm"
-                      placeholder="ABC Corporation"
+                      placeholder="John Deo"
                     />
                   </div>
 
@@ -758,14 +780,14 @@ export default function AdminDashboard({ onLogout }) {
                       onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none text-sm"
-                      placeholder="ABC Corporation"
+                      placeholder="Micheal Leo"
                     />
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Select User</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Select Recievers Email</label>
 
                     <select value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)} required className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none text-sm">
                       <option value="">Select a User</option>
@@ -816,7 +838,7 @@ export default function AdminDashboard({ onLogout }) {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">To(Arrival)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">To (Arrival)</label>
                     <input
                       type="text"
                       name="to"
