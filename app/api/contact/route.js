@@ -1,7 +1,6 @@
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY || 're_DNNcQTSM_6zMTfZDnVD8Ls8Tn3t9fXXY1');
-// const resend = new Resend(process.env.RESEND_API_KEY || 're_DNNcQTSM_6zMTfZDnVD8Ls8Tn3t9fXXY1');
 
 export async function POST(req) {
   // CORS headers
@@ -30,9 +29,9 @@ export async function POST(req) {
       `
     });
 
-    return new Response(JSON.stringify({ success: true, data }), { status: 200, headers });
+    return new Response(JSON.stringify({ success: true, data }), { status: 200,  });
   } catch (error) {
-    return new Response(JSON.stringify({ success: false, error: error.message }), { status: 500, headers });
+    return new Response(JSON.stringify({ success: false, error: error.message }), { status: 500, });
   }
 }
 
