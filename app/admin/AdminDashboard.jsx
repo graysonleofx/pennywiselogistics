@@ -313,7 +313,7 @@ export default function AdminDashboard({ onLogout }) {
       to: newShip.to,
       estimatedDelivery: newShip.estimatedDelivery,
       status: newShip.status,
-      trackingUrl: `pennywiselogistics.online/track/${trackingId}`
+      trackingUrl: `https://pennywiselogistics.online/track/${trackingId}`
     }
 
     try{

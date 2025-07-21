@@ -31,7 +31,7 @@ export async function POST(req) {
 
     console.log
 
-    return new Response(JSON.stringify({ success: true}), 
+    return new Response(JSON.stringify({ success: true, data}), 
     { status: 200 ,
       headers: {'Content-Type': 'application/json'},
     });
