@@ -22,6 +22,12 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Pennywise Delivery Company | Fast & Reliable Shipping",
   description: "Ship your packages worldwide with confidence.",
+  keywords: "shipping, logistics, delivery, tracking",
+  authors: [{ name: "Pennywise Delivery Company" }],
+  creator: "Pennywise Delivery Company",
+  openGraph: {
+    title: "Pennywise Delivery Company",
+  },
 };
 
 export default function RootLayout({
@@ -31,6 +37,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true}>
       <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"></link>
+
         
       </head>
       <body

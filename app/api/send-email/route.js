@@ -17,9 +17,9 @@ export async function POST(req) {
 
     // Send the email using Resend
     const data = await resend.emails.send({
-      from: 'PennyWise Logistics <contact@pennywiselogistics.online>',
+      from: 'Pennywise Logistics <contact@pennywiselogistics.online>',
       to: email,
-      subject: `PennyWise Logistics Order Shipment: #${trackingId}`,
+      subject: `Pennywise Logistics Order Shipment: #${trackingId}`,
       html: `
       <div style="background:#f6f6f6;padding:0;margin:0; width:100%; font-family:Arial,sans-serif;">
         <table width="100%" cellpadding="0" cellspacing="0" style="background:#f6f6f6;padding:0;margin:0;">
@@ -71,7 +71,13 @@ export async function POST(req) {
               <tr>
                 <td style="font-family:Arial,sans-serif;color:#888;font-size:14px;padding:8px 0;">Tracking Code:</td>
                 <td style="font-family:Arial,sans-serif;color:#222;font-size:14px;padding:8px 0;">
-                <strong>${trackingId}</strong>
+                <strong>#${trackingId}</strong>
+                </td>
+              </tr>
+              <tr>
+                <td style="font-family:Arial,sans-serif;color:#888;font-size:14px;padding:8px 0;">Tracking Here:</td>
+                <td style="font-family:Arial,sans-serif;color:#222;font-size:14px;padding:8px 0;">
+                <strong><a href="${shipmentDetails.trackingUrl}">https://pennywiselogistics.online/track/</a></strong>
                 </td>
               </tr>
               </table>
