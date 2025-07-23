@@ -16,8 +16,8 @@ const services = [
   },
   {
     id: '3',
-    title: 'Airline Freight Transportation',
-    description: 'Pennywise Logistics Airline freight transportation is an efficient, reliable, and environmentally friendly solution for moving large volumes of goods over long distances across land.',
+    title: 'Air Freight Transportation',
+    description: 'Pennywise Logistics Air freight transportation is an efficient, reliable, and environmentally friendly solution for moving large volumes of goods over long distances across air.',
     image: '/assets/plane.jpeg',
     icon: 'ri-plane-line'
   }

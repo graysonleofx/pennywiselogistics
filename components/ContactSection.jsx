@@ -1,11 +1,11 @@
 // React Contact Form Component
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const ContactSection = () => {
 
-  useEffect(() =>{
-    console.log('Publick API URL:', process.env.NEXT_PUBLIC_API_URL)
-  }, [])
+  // useEffect(() =>{
+  //   console.log('Publick API URL:', process.env.NEXT_PUBLIC_API_URL)
+  // }, [])
 
   const [formData, setFormData] = useState({
     name: "",
@@ -34,7 +34,7 @@ const ContactSection = () => {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({formData}),
+        body: JSON.stringify({name: formData.name, email: formData.email, phone: formData.phone, subject: formData.subject, message: formData.message }),
       });
       const result = await res.json();
       if (result.success) {

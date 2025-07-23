@@ -4,14 +4,18 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req) {
   // CORS headers
-  // const headers = {
-  //   'Access-Control-Allow-Origin': '*',
-  //   'Content-Type': 'application/json',
-  // };
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+  };
 
   try {
     const body = await req.json();
     const { name, email, phone, subject, message } = body;
+
+    if(!name || !email || !message) {
+      return new Response(JSON.stringify({ success: false, error: 'Name, email, and message are required.' }), { status: 400, headers });
+    }
 
     const data = await resend.emails.send({
       from: 'Pennywise Contact <contact@pennywiselogistics.online>',
@@ -29,18 +33,13 @@ export async function POST(req) {
       `
     });
 
-    console.log
+    console.log('Resend  Response:', data);
 
-    return new Response(JSON.stringify({ success: true, data}), 
-    { status: 200 ,
-      headers: {'Content-Type': 'application/json'},
-    });
-
+    return new Response(JSON.stringify({ success: true, data, message: 'Email sent successfully' }), { status: 200, headers });
     // return new Response(JSON.stringify({ success: true, data }), { status: 200, headers });
   } catch (error) {
-    return new Response(JSON.stringify({ success: false, error: 'Something went wrong' }), { status: 500,
-      headers: {'Content-Type': 'application/json'},
-     });
+    console.error('Error sending email:', error);
+    return new Response(JSON.stringify({ success: false, error: error.message }), { status: 500, headers });
     // return new Response(JSON.stringify({ success: false, error: error.message }), { status: 500, headers });
   }
 }
