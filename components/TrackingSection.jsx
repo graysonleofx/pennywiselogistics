@@ -125,55 +125,91 @@ export default function TrackingSection() {
                     </div>
                   </div>
 
-                  {/* { trackingResult.progress === 'number' && (
-                  )} */}
-                    <div className="mb-8">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm text-gray-600">Progress</span>
-                        <span className="text-sm font-semibold text-orange-600">{progress}%</span>
+                  <div className="mb-8">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-gray-600">Progress</span>
+                      <span className="text-sm font-semibold text-orange-600">{progress}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-3">
+                      <div 
+                        className="bg-orange-500 h-3 rounded-full transition-all duration-500"
+                        style={{ width: `${progress}%` }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-8 mb-8">
+                    {/* Current Location Card */}
+                    <div className="bg-white border border-dashed border-gray-300 rounded-lg p-6 shadow-sm max-w-md mx-auto relative overflow-hidden w-full">
+                      <div className="absolute left-0 top-0 h-full w-2 bg-orange-100 rounded-l-lg"></div>
+                      <div className="flex items-center mb-2">
+                        <i className="ri-map-pin-line text-orange-500 text-2xl mr-3"></i>
+                        <span className="font-bold text-slate-800 text-lg">{trackingResult.from}</span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-3">
-                        <div 
-                          className="bg-orange-500 h-3 rounded-full transition-all duration-500"
-                          style={{ width: `${progress}%` }}
-                        ></div>
+                      <div className="flex justify-between text-sm text-gray-600 mb-1">
+                        <span>Status:</span>
+                        <span className="font-semibold text-orange-600">{trackingResult.status}</span>
+                      </div>
+                      <div className="flex justify-between text-sm text-gray-600">
+                        <span>Date:</span>
+                        <span>{trackingResult.currentDate ? new Date(trackingResult.currentDate).toLocaleString() : '-'}</span>
+                      </div>
+                      <div className="border-t border-dashed border-gray-300 mt-4 pt-2 text-xs text-gray-400 text-center">
+                        Current Location
                       </div>
                     </div>
-
-                  <div className="mb-8">
-                    <h4 className="text-lg font-semibold text-slate-800 mb-4">Current Location</h4>
-                    <div className="bg-gray-100 rounded-lg p-4">
-                      <div className="flex items-center">
-                        <i className="ri-map-pin-line text-orange-500 text-xl mr-3"></i>
-                        <div>
-                          <p className="font-semibold text-slate-800">{trackingResult.from}</p>
-                          <p className="text-gray-600 text-sm">Destination: {trackingResult.to}</p>
-                        </div>
+                    {/* Destination Card */}
+                    <div className="bg-white border border-dashed border-gray-300 rounded-lg p-6 shadow-sm max-w-md mx-auto relative overflow-hidden">
+                      <div className="absolute left-0 top-0 h-full w-2 bg-orange-100 rounded-l-lg"></div>
+                      <div className="flex items-center mb-2">
+                        <i className="ri-flag-2-line text-green-500 text-2xl mr-3"></i>
+                        <span className="font-bold text-slate-800 text-lg">{trackingResult.to}</span>
+                      </div>
+                      <div className="flex justify-between text-sm text-gray-600 mb-1">
+                        <span>Estimated Delivery:</span>
+                        <span className="font-semibold text-slate-800">{trackingResult.estimatedDelivery}</span>
+                      </div>
+                      <div className="flex justify-between text-sm text-gray-600">
+                        <span>Status:</span>
+                        <span className="font-semibold text-orange-600">{trackingResult.status}</span>
+                      </div>
+                      <div className="border-t border-dashed border-gray-300 mt-4 pt-2 text-xs text-gray-400 text-center">
+                        Destination
                       </div>
                     </div>
                   </div>
 
-                  <div>
+                  {/* <div>
                     <h4 className="text-lg font-semibold text-slate-800 mb-4">Tracking Timeline</h4>
                     {trackingResult && Array.isArray(trackingResult.timeline) && (
-                      <div className="space-y-4">
-                        {trackingResult.timeline.filter(item => item.status && item.status.trim() !== '').map((item, index) => (
-                          <div key={index} className="flex items-start">
-                            <div className={`w-4 h-4 rounded-full mt-1 mr-4 ${item.completed ? 'bg-orange-500' : 'bg-gray-300'}`}></div>
-                            <div className="flex-1">
-                              <div className="flex items-center justify-between">
-                                <p className={`font-medium ${item.completed ? 'text-slate-800' : 'text-gray-500'}`}>
-                                {item.status}
-                              </p>
-                              <span className="text-sm text-gray-500">{item.currentDate}</span>
-                            </div>
-                            <p className="text-sm text-gray-600">{item.from}</p>
-                          </div>
-                        </div>
-                        ))}
+                      <div className="overflow-x-auto">
+                        <table className="min-w-full bg-gray-50 rounded-lg shadow-sm">
+                          <thead>
+                            <tr>
+                              <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600 uppercase">Status</th>
+                              <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600 uppercase">Location</th>
+                              <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600 uppercase">Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {trackingResult.timeline
+                              .filter(item => item.status && item.status.trim() !== '')
+                              .map((item, index) => (
+                              <tr key={index} className="border-b border-gray-200">
+                                <td className="px-4 py-2">
+                                  <span className={`font-medium ${item.completed ? 'text-orange-600' : 'text-gray-700'}`}>
+                                    {item.status}
+                                  </span>
+                                </td>
+                                <td className="px-4 py-2">{item.from}</td>
+                                <td className="px-4 py-2">{item.currentDate ? new Date(item.currentDate).toLocaleString() : '-'}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
                     )}
-                  </div>
+                  </div> */}
 
                   <div className="mt-8 p-4 bg-blue-50 rounded-lg">
                     <h5 className="font-semibold text-slate-800 mb-2">Location Map</h5>

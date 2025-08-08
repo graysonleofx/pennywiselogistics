@@ -67,7 +67,7 @@ export default function AdminDashboard({ onLogout }) {
       const totalShipments = data.length;
       const inTransit = data.filter(s => s.status === 'In Transit').length;
       const delivered = data.filter(s => s.status === 'Delivered').length;
-      const processing = data.filter(s => s.status === 'Package Received').length;
+      const processing = data.filter(s => s.status === 'Processing').length;
 
       setStatss({
         totalShipments,
@@ -262,7 +262,7 @@ export default function AdminDashboard({ onLogout }) {
       weight: newShipment.weight,
       from: newShipment.from,
       to: newShipment.to,
-      status: 'Package Recieved',
+      status: 'Processing',
       created: new Date().toISOString().split('T')[0],
       estimatedDelivery: newShipment.estimatedDelivery,
       timeline: []
@@ -296,7 +296,7 @@ export default function AdminDashboard({ onLogout }) {
     alert(`Shipment created successfully! Tracking ID: ${trackingId}`);
 
     await updateTimeline(trackingId, {
-      status: 'Packaged Recieved',
+      status: 'Processing',
       // from: newShipment.from,
       currentDate: new Date().toISOString().split('T')[0],
       completed: true
@@ -313,7 +313,7 @@ export default function AdminDashboard({ onLogout }) {
       to: newShip.to,
       estimatedDelivery: newShip.estimatedDelivery,
       status: newShip.status,
-      trackingUrl: `https://pennywiselogistics.online/track/${trackingId}`
+      trackingUrl: `https://pennywiselogistics.online/#tracking/${trackingId}`
     }
 
     try{
@@ -662,7 +662,7 @@ export default function AdminDashboard({ onLogout }) {
                             onChange={(e) => handleStatusChange(shipment.id, e.target.value)}
                             className="text-xs border border-gray-300 rounded px-2 py-1 pr-8 mb-2"
                           >
-                            <option value="Package Received">Package Created</option>
+                            <option value="Processing">Processing</option>
                             <option value="In Transit">In Transit</option>
                             <option value="Out for Delivery">Out for Delivery </option>
                             <option value="Delivered">Delivered</option>
