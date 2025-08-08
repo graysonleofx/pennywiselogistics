@@ -74,12 +74,6 @@ export async function POST(req) {
                 <strong>#${trackingId}</strong>
                 </td>
               </tr>
-              // <tr>
-              //   <td style="font-family:Arial,sans-serif;color:#888;font-size:14px;padding:8px 0;">Tracking Here:</td>
-              //   <td style="font-family:Arial,sans-serif;color:#222;font-size:14px;padding:8px 0;">
-              //   <strong><a href="${shipmentDetails.trackingUrl}">https://pennywiselogistics.online/#tracking</a></strong>
-              //   </td>
-              // </tr>
               </table>
             </td>
             </tr>
