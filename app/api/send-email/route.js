@@ -4,15 +4,22 @@ import {Resend} from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req) {
-  // Destructure the necessary fields from the request body
-  const { email, trackingId, shipmentDetails } = await req.json();
+  // CORS headers
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+  };
 
   try {
+    const body = await req.json();
+    // Destructure the necessary fields from the request body
+    const { email, trackingId, shipmentDetails } = body;
+
     // Send the email using Resend
     const data = await resend.emails.send({
-      from: 'PennyWise Logistics <contactus@pennywiselogistics.online>',
+      from: 'Pennywise Logistics <contact@pennywiselogistics.online>',
       to: email,
-      subject: `PennyWise Logistics Order Shipment: #${trackingId}`,
+      subject: `Pennywise Logistics Order Shipment: #${trackingId}`,
       html: `
       <div style="background:#f6f6f6;padding:0;margin:0; width:100%; font-family:Arial,sans-serif;">
         <table width="100%" cellpadding="0" cellspacing="0" style="background:#f6f6f6;padding:0;margin:0;">
@@ -22,7 +29,6 @@ export async function POST(req) {
             <tr>
             <td style="padding:32px 32px 16px 32px;text-align:center;">
               <!-- Logo Placeholder -->
-              <img src="https://via.placeholder.com/120x40?text=Logo" alt="Pennywise Logistics" style="display:block;margin:0 auto 16px auto;max-width:120px;">
               <h2 style="font-family:Arial,sans-serif;color:#222;font-size:24px;margin:0 0 8px 0;">Pennywise Logistics</h2>
               <p style="font-family:Arial,sans-serif;color:#555;font-size:16px;margin:0 0 24px 0;">Your shipment is on its way!</p>
             </td>
@@ -51,6 +57,10 @@ export async function POST(req) {
                 <td style="font-family:Arial,sans-serif;color:#222;font-size:14px;padding:8px 0;">${shipmentDetails.status}</td>
               </tr>
               <tr>
+                <td style="font-family:Arial,sans-serif;color:#888;font-size:14px;padding:8px 0;">Shipping Description:</td>
+                <td style="font-family:Arial,sans-serif;color:#222;font-size:14px;padding:8px 0;">${shipmentDetails.description}</td>
+              </tr>
+              <tr>
                 <td style="font-family:Arial,sans-serif;color:#888;font-size:14px;padding:8px 0;">Weight:</td>
                 <td style="font-family:Arial,sans-serif;color:#222;font-size:14px;padding:8px 0;">${shipmentDetails.weight}</td>
               </tr>
@@ -61,7 +71,7 @@ export async function POST(req) {
               <tr>
                 <td style="font-family:Arial,sans-serif;color:#888;font-size:14px;padding:8px 0;">Tracking Code:</td>
                 <td style="font-family:Arial,sans-serif;color:#222;font-size:14px;padding:8px 0;">
-                <strong>${trackingId}</strong>
+                <strong>#${trackingId}</strong>
                 </td>
               </tr>
               </table>
@@ -88,10 +98,22 @@ export async function POST(req) {
     });
     // console.log('Resend  Response:', data);
 
-    return Response.json({ success: true, data, message: 'Email sent successfully' });
+    return new Response(JSON.stringify({ success: true, data, message: 'Email sent successfully' }), { status: 200, headers });
 
   } catch (error) {
     console.error('Error sending email:', error);
-    return new Response.json({ success: false, message: 'Error sending email', status: 500, error });
+    return new Response(JSON.stringify({ success: false, error: error.message }), { status: 500, headers });
   }
+}
+
+// Optional: Handle OPTIONS for CORS preflight
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
 }

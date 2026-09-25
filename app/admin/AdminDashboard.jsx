@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import  supabase from '@/lib/supabaseClient';
-import { sendEmailNotification } from '@/lib/sendEmailNotify';
+// import { sendEmailNotification } from '@/lib/sendEmailNotify';
 
 
 export default function AdminDashboard({ onLogout }) {
@@ -67,7 +67,7 @@ export default function AdminDashboard({ onLogout }) {
       const totalShipments = data.length;
       const inTransit = data.filter(s => s.status === 'In Transit').length;
       const delivered = data.filter(s => s.status === 'Delivered').length;
-      const processing = data.filter(s => s.status === 'Package Received').length;
+      const processing = data.filter(s => s.status === 'Processing').length;
 
       setStatss({
         totalShipments,
@@ -262,7 +262,7 @@ export default function AdminDashboard({ onLogout }) {
       weight: newShipment.weight,
       from: newShipment.from,
       to: newShipment.to,
-      status: 'Package Recieved',
+      status: 'Processing',
       created: new Date().toISOString().split('T')[0],
       estimatedDelivery: newShipment.estimatedDelivery,
       timeline: []
@@ -296,7 +296,7 @@ export default function AdminDashboard({ onLogout }) {
     alert(`Shipment created successfully! Tracking ID: ${trackingId}`);
 
     await updateTimeline(trackingId, {
-      status: 'Packaged Recieved',
+      status: 'Processing',
       // from: newShipment.from,
       currentDate: new Date().toISOString().split('T')[0],
       completed: true
@@ -313,10 +313,32 @@ export default function AdminDashboard({ onLogout }) {
       to: newShip.to,
       estimatedDelivery: newShip.estimatedDelivery,
       status: newShip.status,
-      trackingUrl: `pennywiselogistics.online/track/${trackingId}`
+      trackingUrl: `https://pennywiselogisties.online/#tracking/${trackingId}`
     }
 
-    await sendEmailNotification(newShip.receiverEmail, trackingId, shipmentDetails);
+    try{
+      const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          email: newShip.receiverEmail,
+          trackingId: trackingId,
+          shipmentDetails: shipmentDetails
+        })
+      });
+      const result = await res.json();
+      if(result.success){
+        console.log('Email sent successfully:', result);
+        alert('Email notification sent successfully!');
+      }else{
+        console.error('Error sending email:', result);
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Failed to send email notification. Please try again later.');
+    } 
+
+    // await sendEmailNotification(newShip.receiverEmail, trackingId, shipmentDetails);
   };
 
   const updateTimeline = async (trackingId, newTimelineItem) => {
@@ -640,7 +662,7 @@ export default function AdminDashboard({ onLogout }) {
                             onChange={(e) => handleStatusChange(shipment.id, e.target.value)}
                             className="text-xs border border-gray-300 rounded px-2 py-1 pr-8 mb-2"
                           >
-                            <option value="Package Received">Package Created</option>
+                            <option value="Processing">Processing</option>
                             <option value="In Transit">In Transit</option>
                             <option value="Out for Delivery">Out for Delivery </option>
                             <option value="Delivered">Delivered</option>
@@ -660,6 +682,15 @@ export default function AdminDashboard({ onLogout }) {
                               Edit
                             </button>
                           )}
+
+                          <div className="flex items-center gap-2">
+                            <button
+                              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs font-semibold"
+                              onClick={() => handleDeleteRoute(shipment.id)}
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     );
@@ -745,7 +776,7 @@ export default function AdminDashboard({ onLogout }) {
                       onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none text-sm"
-                      placeholder="ABC Corporation"
+                      placeholder="John Deo"
                     />
                   </div>
 
@@ -758,14 +789,14 @@ export default function AdminDashboard({ onLogout }) {
                       onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none text-sm"
-                      placeholder="ABC Corporation"
+                      placeholder="Micheal Leo"
                     />
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Select User</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Select Recievers Email</label>
 
                     <select value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)} required className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none text-sm">
                       <option value="">Select a User</option>
@@ -816,7 +847,7 @@ export default function AdminDashboard({ onLogout }) {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">To(Arrival)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">To (Arrival)</label>
                     <input
                       type="text"
                       name="to"
