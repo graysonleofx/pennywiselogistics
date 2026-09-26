@@ -28,7 +28,7 @@ export default function AdminPage() {
         return;
       }
 
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const { error: userError } = await supabase.auth.getUser();
       if (userError) {
         console.error('Error fetching user data:', userError);
         setIsAuthenticated(false);

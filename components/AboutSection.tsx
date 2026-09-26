@@ -24,7 +24,7 @@ export default function AboutSection() {
           <div>
             <span className="text-orange-500 font-semibold text-lg mb-4 block">About Us</span>
             <h2 className="text-4xl font-bold text-slate-800 mb-6">
-              We'll keep your items damage free
+              We&apos;ll keep your items damage free
             </h2>
             <p className="text-gray-600 mb-8 leading-relaxed">
               Pennywise Logistics Air freight service delivers the knowledge & opportunity to minimize every mile in every lane. Get Far more Transport and Logistics work experience with Pennywise Logistics supply chain technology Intelligence.

@@ -33,7 +33,7 @@ export default function TestimonialsSection() {
           {testimonials.map((t, idx) => (
             <div key={idx} className="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center text-center">
               <img src={t.avatar} alt={t.name} className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-orange-100" />
-              <p className="text-gray-600 mb-4 italic">"{t.feedback}"</p>
+              <p className="text-gray-600 mb-4 italic">&quot;{t.feedback}&quot;</p>
               <div>
                 <div className="font-semibold text-slate-800">{t.name}</div>
                 <div className="text-sm text-gray-500">{t.role}</div>
