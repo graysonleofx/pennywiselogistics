@@ -17,7 +17,7 @@ export async function POST(req) {
 
     // Send the email using Resend
     const data = await resend.emails.send({
-      from: 'Pennywise Logistics <contact@pennywiselogistics.online>',
+      from: 'Pennywise Logistics <contact@pennywiselogisties.online>',
       to: email,
       subject: `Pennywise Logistics Order Shipment: #${trackingId}`,
       html: `

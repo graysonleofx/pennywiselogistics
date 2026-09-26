@@ -1,5 +1,5 @@
 module.exports = {
-  siteUrl: 'https://pennywiselogistics.online',
+  siteUrl: 'https://pennywiselogisties.online',
   generateRobotsTxt: true,
   sitemapSize: 700,
 };
