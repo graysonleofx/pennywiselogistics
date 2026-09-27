@@ -1,8 +1,4 @@
-import services from '@/data/services';
-
-export default function HeroSection({params}) {
-  const service = services.find((service) => service.id === params.id);
-
+export default function HeroSection({ service }) {
   return(
     <section className="relative w-full h-[350px] sm:h-[450px] flex items-center justify-center mb-12">
         <img

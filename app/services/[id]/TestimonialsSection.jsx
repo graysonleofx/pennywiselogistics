@@ -1,8 +1,4 @@
-import services from '@/data/services';
-
-export default function TestimonialsSection({params}){
-  const service = services.find((service) => service.id === params.id);
-
+export default function TestimonialsSection(){
   const testimonials = [
     {
       name: "Sarah Johnson",

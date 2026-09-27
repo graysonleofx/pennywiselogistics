@@ -1,8 +1,4 @@
-import services from '@/data/services';
-
-export default function OverviewSecion({params}) {
-  const service = services.find((service) => service.id === params.id);
-
+export default function OverviewSecion({ service }) {
   return(
     <section className="max-w-5xl mx-auto px-4 py-10 sm:py-16">
         <div className="grid md:grid-cols-2 gap-10 items-center">

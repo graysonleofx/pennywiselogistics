@@ -18,13 +18,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function Page({ params }) {
-  const service = services.find((service) => service.id === params.id);
-
-  // const [loaded, setLoaded] = useState(false);
-  // useEffect(() => {
-  //   setLoaded(true);
-  // }, []);
+export default async function Page({ params }) {
+  const { id } = await params;
+  const service = services.find((service) => service.id === id);
 
   if (!service) {
     return (
@@ -39,22 +35,22 @@ export default function Page({ params }) {
       <Header />
 
       {/* Hero Section */}
-      <HeroSection params={params}/>
+      <HeroSection service={service} />
 
       {/* Overview Section */}
-      <OverviewSection params={params}/>
+      <OverviewSection service={service} />
 
       {/* Features Section */}
-      <FeatureSection params={params}/>
+      <FeatureSection service={service} />
 
       {/* Why Choose Us Section */}
-      <ChooseSection params={params}/>
+      <ChooseSection service={service} />
 
       {/* Testimonials Section */}
-      <TestimonialsSection params={params}/>
+      <TestimonialsSection service={service} />
 
       {/* CTA Section */}
-      <ContactSection params={params}/>
+      <ContactSection service={service} />
 
       <Footer />
     </>

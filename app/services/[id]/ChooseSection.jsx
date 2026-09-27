@@ -1,10 +1,6 @@
-import services from '@/data/services';
-import { TruckIcon, ClockIcon, PhoneIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon } from '@heroicons/react/24/outline';
 
-
-export default function ChooseSection({params}){
-  const service = services.find((service) => service.id === params.id);
-
+export default function ChooseSection(){
   const whyChooseUs = [
     "Trusted by thousands of customers nationwide.",
     "Advanced security protocols for every shipment.",
