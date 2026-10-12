@@ -192,7 +192,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-slate-800 mb-1">Email Address</h4>
-                  <p className="text-gray-600">contact@pennywiselogistics.online</p>
+                  <p className="text-gray-600">contact@pennywiselogisties.online</p>
                   {/* <p className="text-gray-600">contactus@pannywiselogistics.online</p> */}
                 </div>
               </div>

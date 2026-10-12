@@ -90,7 +90,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center">
                 <i className="ri-mail-line text-orange-400 text-lg mr-3"></i>
-                <p className="text-gray-300">contact@pennywiselogistics.online</p>
+                <p className="text-gray-300">contact@pennywiselogisties.online</p>
               </div>
               <div className="flex items-center">
                 <i className="ri-time-line text-orange-400 text-lg mr-3"></i>
