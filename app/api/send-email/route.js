@@ -1,6 +1,5 @@
 // Import the Resend SDK
 import {Resend} from 'resend';
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req) {
   // CORS headers
@@ -13,6 +12,11 @@ export async function POST(req) {
     const body = await req.json();
     // Destructure the necessary fields from the request body
     const { email, trackingId, shipmentDetails } = body;
+
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not configured.');
+    }
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     // Send the email using Resend
     const data = await resend.emails.send({
